@@ -381,89 +381,83 @@
       transition: color 0.3s;
     }
 
-    /* ── BOOKING ── */
-    #booking {
-      padding: 0;
+    /* ── BOOKING DRAWER ── */
+    .booking-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      z-index: 998;
+      pointer-events: none;
+      transition: background 0.4s ease;
+    }
+    .booking-overlay.open {
+      background: rgba(0,0,0,0.65);
+      pointer-events: all;
+    }
+    .booking-drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(960px, 100vw);
+      height: 100vh;
       background: var(--black);
+      z-index: 999;
       display: grid;
-      grid-template-columns: 380px 1fr;
-      min-height: 100vh;
-      position: relative;
+      grid-template-columns: 300px 1fr;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -20px 0 80px rgba(0,0,0,0.6);
     }
-
-    .booking-left {
+    .booking-drawer.open { transform: translateX(0); }
+    .drawer-left {
       background: var(--black);
-      padding: 5rem 3rem 4rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      height: 100vh;
       border-right: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .booking-left-top {}
-    .booking-left .section-tag { color: rgba(255,255,255,0.35); }
-    .booking-left .section-tag::before { background: rgba(255,255,255,0.35); }
-    .booking-left h2 { color: var(--white); margin-bottom: 1rem; }
-    .booking-left .section-intro { color: rgba(255,255,255,0.4); max-width: 100%; }
-
-    .booking-info-list {
-      list-style: none;
-      margin-top: 3rem;
+      padding: 2.5rem 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0;
+      overflow-y: auto;
     }
-
-    .booking-info-list li {
+    .drawer-top-row {
       display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1.2rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      font-size: 0.85rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+    }
+    .drawer-close-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.15);
       color: rgba(255,255,255,0.5);
-      line-height: 1.5;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
     }
-
-    .booking-info-list li:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
-
-    .booking-info-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
-
-    .booking-info-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
-      margin-bottom: 0.2rem;
+    .drawer-close-btn:hover { border-color: var(--white); color: var(--white); }
+    .drawer-left .section-tag { color: rgba(255,255,255,0.3); margin-bottom: 0.6rem; }
+    .drawer-left .section-tag::before { background: rgba(255,255,255,0.3); }
+    .drawer-left h2 { font-size: 2rem; color: var(--white); margin-bottom: 0.8rem; line-height: 1.1; }
+    .drawer-left .section-intro { color: rgba(255,255,255,0.35); font-size: 0.85rem; max-width: 100%; }
+    .drawer-info-list { list-style: none; margin-top: 2rem; }
+    .drawer-info-list li {
+      display: flex; align-items: flex-start; gap: 0.9rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-
-    .booking-info-val { color: rgba(255,255,255,0.6); font-size: 0.88rem; }
-
-    .booking-left-bottom { padding-top: 2rem; }
-
-    .booking-logo-bottom img {
-      height: 36px;
-      filter: invert(1);
-      opacity: 0.25;
+    .drawer-info-list li:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+    .drawer-info-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .drawer-info-label {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 0.15rem;
     }
-
-    .booking-right {
-      background: #0f0f0f;
-      position: relative;
-      min-height: 100vh;
-    }
-
-    .booking-right iframe {
-      width: 100%;
-      height: 100vh;
-      border: none;
-      display: block;
-      position: sticky;
-      top: 0;
+    .drawer-info-val { color: rgba(255,255,255,0.55); font-size: 0.82rem; }
+    .drawer-logo { margin-top: auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .drawer-logo img { height: 28px; filter: invert(1); opacity: 0.2; }
+    .drawer-right { background: #f5f5f5; position: relative; overflow: hidden; }
+    .drawer-right iframe { width: 100%; height: 100%; border: none; display: block; }
+    #booking { display: none; }
+    @media (max-width: 700px) {
+      .booking-drawer { grid-template-columns: 1fr; width: 100vw; }
+      .drawer-left { display: none; }
     }
 
     /* ── WHY US ── */
@@ -685,7 +679,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#why">About</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="#booking" class="nav-cta">Book Now</a></li>
+      <li><a href="#" onclick="openBooking(); return false;" class="nav-cta">Book Now</a></li>
     </ul>
   </nav>
 
@@ -696,7 +690,7 @@
       <h1>Your Car,<br/><em>Immaculate.</em></h1>
       <p class="hero-sub">Premium car washing and detailing brought directly to your driveway. No hassle, no waiting — just a spotless vehicle every time.</p>
       <div class="hero-actions">
-        <a href="#booking" class="btn-primary">Book an Appointment</a>
+        <a href="#" onclick="openBooking(); return false;" class="btn-primary">Book an Appointment</a>
         <a href="#services" class="btn-outline">View Services</a>
       </div>
     </div>
@@ -737,7 +731,7 @@
         <h2>Our Services</h2>
         <p class="section-intro">From a quick exterior shine to a full interior detail — we bring the car wash to you.</p>
       </div>
-      <a href="#booking" class="btn-primary" style="background:var(--black);color:var(--white);">Schedule Now</a>
+      <a href="#" onclick="openBooking(); return false;" class="btn-primary" style="background:var(--black);color:var(--white);">Schedule Now</a>
     </div>
     <div class="services-grid">
       <div class="service-card">
@@ -761,64 +755,62 @@
     </div>
   </section>
 
-  <!-- BOOKING -->
-  <section id="booking">
+  <!-- BOOKING DRAWER OVERLAY -->
+  <div class="booking-overlay" id="bookingOverlay" onclick="closeBooking()"></div>
 
-    <!-- LEFT PANEL -->
-    <div class="booking-left">
-      <div class="booking-left-top">
-        <div class="section-tag">Schedule Online</div>
+  <!-- BOOKING DRAWER -->
+  <div class="booking-drawer" id="bookingDrawer">
+    <div class="drawer-left">
+      <div>
+        <div class="drawer-top-row">
+          <div class="section-tag">Schedule Online</div>
+          <button class="drawer-close-btn" onclick="closeBooking()" aria-label="Close">✕</button>
+        </div>
         <h2>Book Your Appointment</h2>
         <p class="section-intro">Select your service, pick a time, and we'll come to you anywhere in Allen, TX.</p>
-
-        <ul class="booking-info-list">
+        <ul class="drawer-info-list">
           <li>
-            <span class="booking-info-icon">📍</span>
+            <span class="drawer-info-icon">📍</span>
             <div>
-              <div class="booking-info-label">Service Area</div>
-              <div class="booking-info-val">Allen, TX & Surrounding</div>
+              <div class="drawer-info-label">Service Area</div>
+              <div class="drawer-info-val">Allen, TX & Surrounding</div>
             </div>
           </li>
           <li>
-            <span class="booking-info-icon">🕐</span>
+            <span class="drawer-info-icon">🕐</span>
             <div>
-              <div class="booking-info-label">Hours</div>
-              <div class="booking-info-val">Mon–Sat · 8am–6pm</div>
+              <div class="drawer-info-label">Hours</div>
+              <div class="drawer-info-val">Mon–Sat · 8am–6pm</div>
             </div>
           </li>
           <li>
-            <span class="booking-info-icon">💳</span>
+            <span class="drawer-info-icon">💳</span>
             <div>
-              <div class="booking-info-label">Payment</div>
-              <div class="booking-info-val">Card accepted via Stripe</div>
+              <div class="drawer-info-label">Payment</div>
+              <div class="drawer-info-val">Card accepted via Stripe</div>
             </div>
           </li>
           <li>
-            <span class="booking-info-icon">📞</span>
+            <span class="drawer-info-icon">📞</span>
             <div>
-              <div class="booking-info-label">Questions?</div>
-              <div class="booking-info-val">(469) 905-0379</div>
+              <div class="drawer-info-label">Questions?</div>
+              <div class="drawer-info-val">(469) 905-0379</div>
             </div>
           </li>
           <li>
-            <span class="booking-info-icon">✉️</span>
+            <span class="drawer-info-icon">✉️</span>
             <div>
-              <div class="booking-info-label">Email</div>
-              <div class="booking-info-val">help@thecaesarco.com</div>
+              <div class="drawer-info-label">Email</div>
+              <div class="drawer-info-val">help@thecaesarco.com</div>
             </div>
           </li>
         </ul>
       </div>
-
-      <div class="booking-left-bottom">
-        <div class="booking-logo-bottom">
-          <img src="data:image/jpeg;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//9k=" alt="TheCaesarCo" />
-        </div>
+      <div class="drawer-logo">
+        <img src="data:image/jpeg;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//9k=" alt="TheCaesarCo" />
       </div>
     </div>
-
-    <!-- RIGHT PANEL — FULL SETMORE IFRAME -->
-    <div class="booking-right">
+    <div class="drawer-right">
       <iframe
         src="https://thecaesarco.setmore.com/caesar"
         title="Book an appointment with TheCaesarCo"
@@ -827,10 +819,9 @@
         allowtransparency="true">
       </iframe>
     </div>
+  </div>
 
-  </section>
-
-  <!-- WHY US -->
+    <!-- WHY US -->
   <section id="why">
     <div class="why-visual">
       <div class="why-blk-main">
@@ -893,5 +884,20 @@
     <div>Built for excellence</div>
   </footer>
 
+  <script>
+    function openBooking() {
+      document.getElementById('bookingDrawer').classList.add('open');
+      document.getElementById('bookingOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeBooking() {
+      document.getElementById('bookingDrawer').classList.remove('open');
+      document.getElementById('bookingOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeBooking();
+    });
+  </script>
 </body>
 </html>
