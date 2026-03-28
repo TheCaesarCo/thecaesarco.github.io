@@ -383,30 +383,87 @@
 
     /* ── BOOKING ── */
     #booking {
+      padding: 0;
       background: var(--black);
-      color: var(--white);
-      text-align: center;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      min-height: 100vh;
+      position: relative;
     }
 
-    #booking .section-tag { color: rgba(255,255,255,0.35); }
-    #booking .section-tag::before { background: rgba(255,255,255,0.35); }
-    #booking h2 { color: var(--white); }
-    #booking .section-intro { color: rgba(255,255,255,0.4); margin: 0 auto 3.5rem; }
-
-    .booking-widget-wrapper {
-      background: #111111;
-      border: 1px solid rgba(255,255,255,0.08);
-      max-width: 920px;
-      margin: 0 auto;
-      overflow: hidden;
-      min-height: 600px;
+    .booking-left {
+      background: var(--black);
+      padding: 5rem 3rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      border-right: 1px solid rgba(255,255,255,0.07);
     }
 
-    .booking-widget-wrapper iframe {
+    .booking-left-top {}
+    .booking-left .section-tag { color: rgba(255,255,255,0.35); }
+    .booking-left .section-tag::before { background: rgba(255,255,255,0.35); }
+    .booking-left h2 { color: var(--white); margin-bottom: 1rem; }
+    .booking-left .section-intro { color: rgba(255,255,255,0.4); max-width: 100%; }
+
+    .booking-info-list {
+      list-style: none;
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .booking-info-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    .booking-info-list li:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+
+    .booking-info-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    .booking-info-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      margin-bottom: 0.2rem;
+    }
+
+    .booking-info-val { color: rgba(255,255,255,0.6); font-size: 0.88rem; }
+
+    .booking-left-bottom { padding-top: 2rem; }
+
+    .booking-logo-bottom img {
+      height: 36px;
+      filter: invert(1);
+      opacity: 0.25;
+    }
+
+    .booking-right {
+      background: #0f0f0f;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .booking-right iframe {
       width: 100%;
-      min-height: 600px;
+      height: 100vh;
       border: none;
       display: block;
+      position: sticky;
+      top: 0;
     }
 
     /* ── WHY US ── */
@@ -706,20 +763,62 @@
 
   <!-- BOOKING -->
   <section id="booking">
-    <div class="section-tag">Schedule Online</div>
-    <h2>Book Your Appointment</h2>
-    <p class="section-intro">Select your service, pick a time that works for you, and we'll come to you. Powered by Setmore.</p>
 
-    <div class="booking-widget-wrapper">
-      <!--
-        ============================================================
-        SETMORE BOOKING WIDGET
-        1. Log into setmore.com
-        2. Go to Settings → Integrations → Booking Page
-        3. Click "Embed" and copy your unique booking URL
-        4. Replace YOUR_SETMORE_BOOKING_URL below with your actual URL
-        ============================================================
-      -->
+    <!-- LEFT PANEL -->
+    <div class="booking-left">
+      <div class="booking-left-top">
+        <div class="section-tag">Schedule Online</div>
+        <h2>Book Your Appointment</h2>
+        <p class="section-intro">Select your service, pick a time, and we'll come to you anywhere in Allen, TX.</p>
+
+        <ul class="booking-info-list">
+          <li>
+            <span class="booking-info-icon">📍</span>
+            <div>
+              <div class="booking-info-label">Service Area</div>
+              <div class="booking-info-val">Allen, TX & Surrounding</div>
+            </div>
+          </li>
+          <li>
+            <span class="booking-info-icon">🕐</span>
+            <div>
+              <div class="booking-info-label">Hours</div>
+              <div class="booking-info-val">Mon–Sat · 8am–6pm</div>
+            </div>
+          </li>
+          <li>
+            <span class="booking-info-icon">💳</span>
+            <div>
+              <div class="booking-info-label">Payment</div>
+              <div class="booking-info-val">Card accepted via Stripe</div>
+            </div>
+          </li>
+          <li>
+            <span class="booking-info-icon">📞</span>
+            <div>
+              <div class="booking-info-label">Questions?</div>
+              <div class="booking-info-val">(469) 905-0379</div>
+            </div>
+          </li>
+          <li>
+            <span class="booking-info-icon">✉️</span>
+            <div>
+              <div class="booking-info-label">Email</div>
+              <div class="booking-info-val">help@thecaesarco.com</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="booking-left-bottom">
+        <div class="booking-logo-bottom">
+          <img src="data:image/jpeg;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//9k=" alt="TheCaesarCo" />
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL — FULL SETMORE IFRAME -->
+    <div class="booking-right">
       <iframe
         src="https://thecaesarco.setmore.com/caesar"
         title="Book an appointment with TheCaesarCo"
@@ -728,6 +827,7 @@
         allowtransparency="true">
       </iframe>
     </div>
+
   </section>
 
   <!-- WHY US -->
