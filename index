@@ -664,7 +664,7 @@ footer p { font-size: .78rem; color: #6e6e73; letter-spacing: -.01em; }
     <p>© 2026 The Caesar Co. · Allen, Texas · All rights reserved</p>
     <div style="display:flex;gap:24px;flex-wrap:wrap;">
       <a href="terms.html" style="font-size:.78rem;color:#6e6e73;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#f5f5f7'" onmouseout="this.style.color='#6e6e73'">Terms &amp; Conditions</a>
-      <a href="refund.html" style="font-size:.78rem;color:#6e6e73;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#f5f5f7'" onmouseout="this.style.color='#6e6e73'">Refund Policy</a>
+      <a href="refund-policy.html" style="font-size:.78rem;color:#6e6e73;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#f5f5f7'" onmouseout="this.style.color='#6e6e73'">Refund Policy</a>
     </div>
   </div>
 </footer>
