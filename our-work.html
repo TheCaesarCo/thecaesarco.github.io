@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Work — Caesar Co.</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0a0a0a;
+    color: #f5f5f7;
+    min-height: 100vh;
+  }
+  header {
+    padding: 24px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em; }
+  header a { color: #f5f5f7; text-decoration: none; font-size: 0.94rem; opacity: 0.8; }
+  header a:hover { opacity: 1; }
+  main { max-width: 1200px; margin: 0 auto; padding: 60px 40px; }
+  .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.03em; }
+  .page-sub { color: rgba(245,245,247,0.6); margin-bottom: 48px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: #161616;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+  }
+  .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
+  .card-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: #222 center/cover no-repeat;
+  }
+  .card-body { padding: 18px 20px 22px; }
+  .card-type {
+    display: inline-block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(245,245,247,0.5);
+    margin-bottom: 6px;
+  }
+  .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+  .card-desc { font-size: 0.9rem; color: rgba(245,245,247,0.65); line-height: 1.5; }
+  .empty, .loading { text-align: center; padding: 80px 20px; color: rgba(245,245,247,0.5); }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Caesar Co.</h1>
+    <a href="/">← Home</a>
+  </header>
+  <main>
+    <h2 class="page-title">Our Work</h2>
+    <p class="page-sub">A selection of recent car projects.</p>
+    <div id="grid" class="loading">Loading projects…</div>
+  </main>
+
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  const SUPABASE_URL = "https://fhhdmaawmsrlcctfvmpk.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoaGRtYWF3bXNybGNjdGZ2bXBrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczODU4NDgsImV4cCI6MjA5Mjk2MTg0OH0.7PlxLyZuR9zBZOiEUrpysKcYtrKzpjcuehDI_w0OmJs";
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const grid = document.getElementById("grid");
+
+  const { data, error } = await supabase
+    .from("car_projects")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    grid.className = "empty";
+    grid.textContent = "Couldn't load projects.";
+  } else if (!data || data.length === 0) {
+    grid.className = "empty";
+    grid.textContent = "No projects yet.";
+  } else {
+    grid.className = "grid";
+    grid.innerHTML = data.map(p => `
+      <article class="card">
+        <div class="card-img" style="background-image:url('${p.cover_photo || (p.photos && p.photos[0]) || ''}')"></div>
+        <div class="card-body">
+          <div class="card-type">${p.car_type || ""}</div>
+          <h3 class="card-title">${p.title || "Untitled"}</h3>
+          <p class="card-desc">${(p.description || "").slice(0, 140)}</p>
+        </div>
+      </article>
+    `).join("");
+  }
+</script>
+</body>
+</html>
