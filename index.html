@@ -475,7 +475,52 @@ footer p { font-size: .78rem; color: #6e6e73; letter-spacing: -.01em; }
   transition: opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1);
 }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── TRUSTPILOT BADGE ── */
+.tp-wrap {
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 28px 24px;
+  display: flex; justify-content: center; align-items: center;
+}
+.tp-badge-link {
+  display: inline-flex; align-items: center; gap: 12px;
+  text-decoration: none;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 14px 24px;
+  transition: background .2s, border-color .2s, transform .15s;
+  flex-wrap: wrap; justify-content: center;
+}
+.tp-badge-link:hover {
+  background: rgba(0,182,122,0.08);
+  border-color: rgba(0,182,122,0.3);
+  transform: scale(1.02);
+}
+.tp-wordmark {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: #f5f5f7; letter-spacing: -.02em;
+}
+.tp-stars-row {
+  display: flex; gap: 3px;
+}
+.tp-stars-row svg { width: 26px; height: 26px; border-radius: 3px; }
+.tp-score-text {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: .82rem; color: #a1a1a6;
+  border-left: 1px solid rgba(255,255,255,0.12);
+  padding-left: 12px;
+}
+.tp-score-text strong { color: #f5f5f7; }
+@media(max-width:520px) {
+  .tp-score-text { border-left: none; padding-left: 0; }
+}
 </style>
+<!-- TrustBox script -->
+<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+<!-- End TrustBox script -->
 </head>
 <body>
 
@@ -717,11 +762,23 @@ footer p { font-size: .78rem; color: #6e6e73; letter-spacing: -.01em; }
   </div>
 </section>
 
+
+
 <!-- CTA BAND -->
 <div class="cta-band">
   <h2>Ready for a spotless ride?</h2>
   <p>Book online in minutes — we come to you anywhere in Allen, TX.</p>
   <button class="btn-white" onclick="openDrw()">Book an Appointment</button>
+</div>
+
+
+<!-- ── TRUSTPILOT LIVE WIDGET ── -->
+<div class="tp-wrap">
+  <!-- TrustBox widget - Review Collector -->
+  <div class="trustpilot-widget" data-locale="en-US" data-template-id="56278e9abfbbba0bdcd568bc" data-businessunit-id="69dbdd839c63b6898d044eab" data-style-height="52px" data-style-width="100%" data-token="19731d32-e2d8-4239-be21-236c2a248a2a">
+    <a href="https://www.trustpilot.com/review/thecaesarco.com" target="_blank" rel="noopener">Trustpilot</a>
+  </div>
+  <!-- End TrustBox widget -->
 </div>
 
 <!-- FOOTER -->
@@ -799,5 +856,265 @@ function outsideClose(e) {
   }
 }
 </script>
+
+<!-- ══════════════════════════════════════════════
+     PROMO COUNTDOWN OVERLAY
+     To activate: set PROMO_ACTIVE = true and set TARGET_DATE
+     ══════════════════════════════════════════════ -->
+<style>
+#countdown-overlay {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+}
+#countdown-overlay.hidden { display: none; }
+
+/* Blobs */
+.cd-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); opacity: .18;
+  pointer-events: none;
+  animation: cdBlob 10s ease-in-out infinite;
+}
+.cd-blob1 { width: 500px; height: 500px; background: #0071e3; top: -180px; left: -100px; animation-delay:0s; }
+.cd-blob2 { width: 360px; height: 360px; background: #5ac8fa; bottom: -100px; right: -80px; animation-delay: -4s; }
+@keyframes cdBlob {
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(20px,-30px) scale(1.06); }
+}
+
+/* Label */
+.cd-label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: .7rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: #0071e3;
+  margin-bottom: 20px; position: relative; z-index: 2;
+}
+
+/* Promo title */
+.cd-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(26px, 5vw, 56px);
+  font-weight: 700; letter-spacing: -.03em;
+  color: #f5f5f7; text-align: center;
+  margin-bottom: 8px; line-height: 1.05;
+  position: relative; z-index: 2;
+}
+.cd-title span { color: #5ac8fa; }
+.cd-subtitle {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(.82rem, 2vw, 1rem);
+  color: #a1a1a6; text-align: center;
+  margin-bottom: 48px; font-weight: 300;
+  line-height: 1.6; max-width: 420px;
+  position: relative; z-index: 2;
+}
+
+/* Clock boxes */
+.cd-clock {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  justify-content: center; align-items: flex-end;
+  margin-bottom: 52px; position: relative; z-index: 2;
+}
+.cd-unit {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.cd-box {
+  background: #ffffff;
+  border-radius: 16px;
+  width: clamp(68px, 18vw, 110px);
+  height: clamp(72px, 19vw, 116px);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2);
+}
+/* flip line */
+.cd-box::after {
+  content: '';
+  position: absolute; top: 50%; left: 0; right: 0;
+  height: 1px; background: rgba(0,0,0,0.07);
+}
+.cd-num {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(28px, 7vw, 52px);
+  font-weight: 700; color: #000;
+  letter-spacing: -.04em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.cd-unit-label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: .65rem; font-weight: 500;
+  color: #6e6e73; letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.cd-sep {
+  font-size: clamp(28px, 6vw, 48px); font-weight: 300;
+  color: #3a3a3c; margin-bottom: 30px; line-height: 1;
+  align-self: center;
+}
+
+/* Buttons */
+.cd-actions {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center; position: relative; z-index: 2;
+}
+.cd-btn-primary {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0071e3; color: #fff;
+  border: none; border-radius: 980px;
+  padding: 14px 28px; font-size: .88rem; font-weight: 500;
+  cursor: pointer; text-decoration: none;
+  transition: background .2s, transform .15s;
+  letter-spacing: -.01em;
+}
+.cd-btn-primary:hover { background: #0077ed; transform: scale(1.03); }
+.cd-btn-ghost {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #f5f5f7; border-radius: 980px;
+  padding: 13px 24px; font-size: .85rem; font-weight: 400;
+  cursor: pointer; text-decoration: none;
+  transition: background .2s, transform .15s;
+  letter-spacing: -.01em;
+}
+.cd-btn-ghost:hover { background: rgba(255,255,255,0.1); transform: scale(1.03); }
+.cd-btn-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: none; border: none;
+  color: #6e6e73; font-size: .78rem;
+  cursor: pointer; text-decoration: none;
+  padding: 8px 14px; border-radius: 980px;
+  transition: color .2s;
+  letter-spacing: -.01em;
+}
+.cd-btn-text:hover { color: #a1a1a6; }
+
+/* Millisecond ticker color */
+.cd-ms .cd-num { color: #0071e3; }
+.cd-ms .cd-box { background: #f0f0f0; }
+
+/* Expired state */
+.cd-expired {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.1rem; font-weight: 500; color: #5ac8fa;
+  text-align: center; margin-bottom: 48px;
+  position: relative; z-index: 2;
+}
+
+@media(max-width: 480px) {
+  .cd-clock { gap: 8px; }
+  .cd-sep { font-size: 22px; margin-bottom: 22px; }
+  .cd-btn-primary, .cd-btn-ghost { padding: 12px 18px; font-size: .82rem; }
+}
+</style>
+
+<div id="countdown-overlay" class="hidden">
+  <div class="cd-blob cd-blob1"></div>
+  <div class="cd-blob cd-blob2"></div>
+
+  <div class="cd-label" id="cdLabel">Limited Time Offer</div>
+  <h1 class="cd-title" id="cdTitle">Special <span>Promo</span> Ends In</h1>
+  <p class="cd-subtitle" id="cdSubtitle">Don't miss out — book your detail before the offer expires.</p>
+
+  <div class="cd-clock" id="cdClock">
+    <div class="cd-unit">
+      <div class="cd-box"><span class="cd-num" id="cdHours">00</span></div>
+      <div class="cd-unit-label">Hours</div>
+    </div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit">
+      <div class="cd-box"><span class="cd-num" id="cdMinutes">00</span></div>
+      <div class="cd-unit-label">Minutes</div>
+    </div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit">
+      <div class="cd-box"><span class="cd-num" id="cdSeconds">00</span></div>
+      <div class="cd-unit-label">Seconds</div>
+    </div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit cd-ms">
+      <div class="cd-box"><span class="cd-num" id="cdMs">00</span></div>
+      <div class="cd-unit-label">Millisec</div>
+    </div>
+  </div>
+
+  <div class="cd-actions">
+    <button class="cd-btn-primary" onclick="openDrw()">Book Now</button>
+    <a href="our-work.html" class="cd-btn-ghost">Our Work</a>
+    <a href="terms.html" class="cd-btn-text">Terms &amp; Conditions</a>
+    <a href="refund-policy.html" class="cd-btn-text">Refund Policy</a>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//  PROMO COUNTDOWN CONFIG — edit these values
+// ══════════════════════════════════════════════
+const PROMO_ACTIVE  = false;                        // ← set to true to show overlay
+const TARGET_DATE   = '2026-05-10T23:59:59';        // ← your promo end date/time (ISO format)
+const PROMO_LABEL   = 'Limited Time Offer';          // ← top eyebrow text
+const PROMO_TITLE   = 'Special <span>Promo</span> Ends In'; // ← headline (HTML ok)
+const PROMO_SUBTITLE = "Don't miss out — book your detail before the offer expires.";
+// ══════════════════════════════════════════════
+
+(function() {
+  if (!PROMO_ACTIVE) return;
+
+  const overlay  = document.getElementById('countdown-overlay');
+  const elHours  = document.getElementById('cdHours');
+  const elMins   = document.getElementById('cdMinutes');
+  const elSecs   = document.getElementById('cdSeconds');
+  const elMs     = document.getElementById('cdMs');
+  const elLabel  = document.getElementById('cdLabel');
+  const elTitle  = document.getElementById('cdTitle');
+  const elSub    = document.getElementById('cdSubtitle');
+
+  // Apply config
+  elLabel.textContent = PROMO_LABEL;
+  elTitle.innerHTML   = PROMO_TITLE;
+  elSub.textContent   = PROMO_SUBTITLE;
+
+  // Show overlay
+  overlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  const end = new Date(TARGET_DATE).getTime();
+
+  function pad(n, digits) { return String(Math.floor(n)).padStart(digits, '0'); }
+
+  function tick() {
+    const now  = Date.now();
+    const diff = end - now;
+
+    if (diff <= 0) {
+      elHours.textContent = '00';
+      elMins.textContent  = '00';
+      elSecs.textContent  = '00';
+      elMs.textContent    = '00';
+      return; // stop ticking
+    }
+
+    const totalSecs = diff / 1000;
+    const hours = Math.floor(totalSecs / 3600);
+    const mins  = Math.floor((totalSecs % 3600) / 60);
+    const secs  = Math.floor(totalSecs % 60);
+    const ms    = Math.floor((diff % 1000) / 10); // 2-digit ms
+
+    elHours.textContent = pad(hours, 2);
+    elMins.textContent  = pad(mins, 2);
+    elSecs.textContent  = pad(secs, 2);
+    elMs.textContent    = pad(ms, 2);
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+})();
+</script>
+
 </body>
 </html>
